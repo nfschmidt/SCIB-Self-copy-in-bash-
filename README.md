@@ -2,11 +2,11 @@
 
 SCIB is a Bash script that attaches itself onto an executable file.
 
-SCIB attaches itself at the beginning of executable files. When these files are executed, what will actually happen is that SCIB will execute an action first, and then the executable file will be executed normally.
-
 SCIB intercepts the execution of the target executable file.
 
-SCIB is just a proof of concept to show an easy way to inject code onto an existing binary.
+SCIB attaches itself at the beginning of an executable file. When the file is executed, SCIB first execute an action (in the examples it prints a message), and then the executable file will be executed normally.
+
+SCIB is just a proof of concept to show an easy way to inject code onto an existing executable.
 
 
 Some examples:
@@ -23,7 +23,7 @@ With a script:
     Hello, I'm the script!
 
 
-With a C program
+With a C program:
 
     $ ./myCProgram one two three
     Hello, I'm the C program! I've been called with 3 parameters
