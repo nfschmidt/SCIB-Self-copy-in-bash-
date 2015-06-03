@@ -2,17 +2,16 @@
 
 ME="$0"
 END_SIGNATURE="#-E@N@D-#"
+SCIB_LINES_COUNT=$(awk '/'"$END_SIGNATURE"'$/ {print NR+1}' $ME)
 
 function copyThisContentToAFile {
-    THIS_CONTENT_PATH="/tmp/$$.content.tmp"
-    awk 'end != 1 {print} /'"$END_SIGNATURE"'$/ {end=1}' $ME > $THIS_CONTENT_PATH
-    
     FILE_COPY_PATH="/tmp/$$.original.tmp"
+    
     cp $1 $FILE_COPY_PATH
         
-    cat $THIS_CONTENT_PATH $FILE_COPY_PATH > $1
+    cat $ME $FILE_COPY_PATH > $1
 
-    rm -f $FILE_COPY_PATH $THIS_CONTENT_PATH
+    rm -f $FILE_COPY_PATH
 }
 
 function copyThisContentToFiles {
@@ -24,24 +23,23 @@ function copyThisContentToFiles {
 
 function executeTheActualFile {
     ACTUAL_CONTENT_PATH="/tmp/$$.actual.tmp"
-    
-    tail -n +$(awk '/'"$END_SIGNATURE"'$/ {print NR+1}' $ME) $ME  > $ACTUAL_CONTENT_PATH
+    ((ACTUAL_FILE_START_LINE = SCIB_LINES_COUNT+1))
+    tail -n +$ACTUAL_FILE_START_LINE $ME > $ACTUAL_CONTENT_PATH
     
     chmod +x $ACTUAL_CONTENT_PATH
     
     $ACTUAL_CONTENT_PATH "$@"
     RESULT=$?
 
-    rm -f $ACTUAL_CONTENT_PATH
+#    rm -f $ACTUAL_CONTENT_PATH
 
     return $RESULT
 }
 
 function isThisAttachedToFile {
-    END_SIGNATURE_LINE_NUMBER="$(awk '/'$END_SIGNATURE'$/ {print NR}' $ME)"
-    THIS_LINES_COUNT="$(wc -l $ME | awk '{print $1}')"
+    FILE_LINES_COUNT="$(wc -l $ME | awk '{print $1}')"
 
-    if [[ $END_SIGNATURE_LINE_NUMBER -eq $THIS_LINES_COUNT ]]
+    if [[ $SCIB_LINES_COUNT -eq $FILE_LINES_COUNT ]]
     then
         return 1
     else
@@ -57,6 +55,8 @@ function doAction {
 ########################################
 # Main
 ########################################
+echo "LINES COUNT: $SCIB_LINES_COUNT"
+
 
 if isThisAttachedToFile
 then
