@@ -55,8 +55,6 @@ function doAction {
 ########################################
 # Main
 ########################################
-echo "LINES COUNT: $SCIB_LINES_COUNT"
-
 
 if isThisAttachedToFile
 then
