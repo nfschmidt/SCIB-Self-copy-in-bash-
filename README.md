@@ -4,7 +4,7 @@ SCIB is a Bash script that attaches itself onto an executable file.
 
 SCIB intercepts the execution of the target executable file.
 
-SCIB attaches itself at the beginning of an executable file. When the file is executed, SCIB first execute an action (in the examples it prints a message), and then the executable file will be executed normally.
+SCIB attaches itself at the beginning of an executable file. When the file is executed, SCIB first executes an action (in the examples it prints a message), and then the executable file will be executed normally.
 
 SCIB is just a proof of concept to show an easy way to inject code onto an existing executable.
 
