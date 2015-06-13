@@ -35,7 +35,7 @@ With a C program:
     
     $ ./myCProgram one two three  # Executing the program again, this time the execution was intercepted by SCIB
     Hello! SCIB is here! :)
-    Hello, I'm the C program! I've been called with 4 parameters
+    Hello, I'm the C program! I've been called with 3 parameters
     one
     two
     three
